@@ -1,20 +1,21 @@
-- name: Disable SELinux (Amazon Linux)
-  when: ansible_os_family == "RedHat"
-  become: true
+- name: Disable SELinux (Amazon Linux / RedHat)
   ansible.builtin.lineinfile:
     path: /etc/selinux/config
     regexp: '^SELINUX='
     line: 'SELINUX=disabled'
-
-- name: Stop firewalld
-  service:
+  when: ansible_os_family == "RedHat"
+  become: true
+- name: Stop firewalld (if present)
+  ansible.builtin.service:
     name: firewalld
     state: stopped
     enabled: no
-  ignore_errors: true  
-
-- name: Install curl (dependency for Netdata)
-  apt:
+  ignore_errors: true
+  become: true
+- name: Install curl (on Debian-based systems)
+  ansible.builtin.apt:
     name: curl
     state: present
+    update_cache: yes
   when: ansible_os_family == "Debian"
+  become: true
