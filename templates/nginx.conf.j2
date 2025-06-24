@@ -5,12 +5,28 @@ events {
 }
 
 http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+   
+    server {
+        listen 80;
+        server_name _;
+
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+
+
     upstream backend_netdata {
-        server 44.210.117.103:19999;  # backend u21.local IP and port
+        server 44.210.117.103:19999;  
     }
 
     server {
-        listen 80;
+        listen 19999;
 
         location / {
             proxy_pass http://backend_netdata;
