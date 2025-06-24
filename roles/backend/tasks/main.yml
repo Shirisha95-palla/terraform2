@@ -1,17 +1,37 @@
 - name: Install curl (dependency)
-  apt:
+  ansible.builtin.apt:
     name: curl
     state: present
+    update_cache: yes
   when: ansible_os_family == "Debian"
-
+  become: true
 - name: Download Netdata installer script
-  get_url:
+  ansible.builtin.get_url:
     url: https://my-netdata.io/kickstart.sh
     dest: /tmp/kickstart.sh
     mode: '0755'
-
+  become: true
 - name: Install Netdata from downloaded script
-  command: bash /tmp/kickstart.sh --dont-wait
+  ansible.builtin.command: bash /tmp/kickstart.sh --dont-wait
   args:
     creates: /opt/netdata
-  ignore_errors: true
+  become: true
+
+
+
+
+
+
+
+
+
+
+
+Message sai kiran
+
+
+
+
+
+
+
