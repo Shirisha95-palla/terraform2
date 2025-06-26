@@ -5,12 +5,22 @@
     update_cache: yes
   when: ansible_os_family == "Debian"
   become: true
+
+- name: Enable NGINX on Amazon Linux (via amazon-linux-extras)
+  ansible.builtin.shell: |
+    amazon-linux-extras enable nginx1
+    yum clean metadata
+    yum install -y nginx
+  when: ansible_distribution == "Amazon"
+  become: true
+
 - name: Start and enable nginx
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: yes
   become: true
+
 - name: Copy nginx reverse proxy config
   ansible.builtin.template:
     src: nginx.conf.j2
