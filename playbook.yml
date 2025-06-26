@@ -1,3 +1,4 @@
+---
 - name: Bootstrap Python 3.8 on Amazon Linux
   hosts: frontend
   gather_facts: false
@@ -17,8 +18,6 @@
         src: /usr/bin/python3.8
         dest: /usr/bin/python3
         state: link
-
----
 
 - name: Common setup (SELinux + firewalld)
   hosts: all
