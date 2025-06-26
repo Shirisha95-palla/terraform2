@@ -1,8 +1,9 @@
----
 - name: Bootstrap Python 3.8 on Amazon Linux
   hosts: frontend
   gather_facts: false
   become: true
+  vars:
+    ansible_python_interpreter: /bin/sh
 
   tasks:
     - name: Enable Python 3.8 using amazon-linux-extras
