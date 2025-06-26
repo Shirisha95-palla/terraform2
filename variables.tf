@@ -5,12 +5,12 @@ variable "region" {
 
 variable "key_name" {
   description = "EC2 Key Pair Name"
-  default     = "vpc1-key"
+  default     = "jenkins"
 }
 
 variable "security_group_id" {
   description = "Security Group ID"
-  default     = "sg-0761c2cdee06474d8"
+  default     = "sg-0d7f8155c7d09c24d"
 }
 
 variable "ami_amazon_linux" {
