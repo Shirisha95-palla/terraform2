@@ -18,8 +18,3 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "pem_path" {
-  description = "Absolute path to the private key file used for SSH"
-  type        = string
-  default     = "/var/lib/jenkins/jenkins.pem"
-}
