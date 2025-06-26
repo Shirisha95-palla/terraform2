@@ -6,11 +6,13 @@
   when: ansible_os_family == "Debian"
   become: true
 
-- name: Enable NGINX on Amazon Linux (via amazon-linux-extras)
+- name: Enable and install nginx on Amazon Linux (via amazon-linux-extras)
   ansible.builtin.shell: |
     amazon-linux-extras enable nginx1
     yum clean metadata
     yum install -y nginx
+  args:
+    creates: /usr/sbin/nginx
   when: ansible_distribution == "Amazon"
   become: true
 
