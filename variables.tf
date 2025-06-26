@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "key_name" {
-  default = "HA-Proxy-server"
+  default = "jenkins"
 }
 
 variable "ami_amazon_linux" {
