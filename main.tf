@@ -120,9 +120,9 @@ resource "local_file" "ansible_inventory" {
 
   content = <<-EOT
     [frontend]
-    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=${var.pem_path}
+    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem
 
     [backend]
-    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${var.pem_path}
+    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem
   EOT
 }
