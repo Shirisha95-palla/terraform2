@@ -77,6 +77,7 @@ resource "aws_security_group" "instance_sg" {
 }
 
 # Amazon Linux Instance
+# Amazon Linux Instance
 resource "aws_instance" "amazon_linux_vm" {
   ami                         = var.ami_amazon_linux
   instance_type               = var.instance_type
@@ -88,12 +89,21 @@ resource "aws_instance" "amazon_linux_vm" {
   user_data = <<-EOF
               #!/bin/bash
               hostnamectl set-hostname c8.local
+
+              # Install Python 3.8
+              amazon-linux-extras enable python3.8
+              yum clean metadata
+              yum install -y python3.8
+
+              # Set python3 symlink to python3.8
+              alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
               EOF
 
   tags = {
     Name = "c8.local"
   }
 }
+
 
 # Ubuntu Instance
 resource "aws_instance" "ubuntu_vm" {
