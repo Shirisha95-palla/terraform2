@@ -1,18 +1,20 @@
 - name: Common setup (SELinux + firewalld)
   hosts: all
   become: true
+  gather_facts: true
   roles:
     - common
 
 - name: Frontend setup
   hosts: frontend
   become: true
+  gather_facts: true
   roles:
     - frontend
- 
+
 - name: Backend setup
   hosts: backend
   become: true
+  gather_facts: true
   roles:
     - backend
-
