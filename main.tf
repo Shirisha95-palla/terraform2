@@ -118,10 +118,24 @@ resource "aws_instance" "ubuntu_vm" {
   vpc_security_group_ids      = [aws_security_group.instance_sg.id]
   associate_public_ip_address = true
 
-  user_data = <<-EOF
-              #!/bin/bash
-              hostnamectl set-hostname u21.local
-              EOF
+ user_data = <<-EOF
+            #!/bin/bash
+            set -e
+
+            hostnamectl set-hostname c8.local
+
+            # Install Python 3.8
+            amazon-linux-extras enable python3.8 -y
+            yum clean metadata
+            yum install -y python3.8 python3-pip
+
+            # Create symlink
+            alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
+
+            # Ensure SSH is enabled
+            systemctl enable sshd
+            systemctl start sshd
+EOF
 
   tags = {
     Name = "u21.local"
