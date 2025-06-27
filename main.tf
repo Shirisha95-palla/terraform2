@@ -112,19 +112,7 @@ resource "aws_instance" "ubuntu_vm" {
             set -e
 
             hostnamectl set-hostname c8.local
-
-            # Install Python 3.8
-            amazon-linux-extras enable python3.8 -y
-            yum clean metadata
-            yum install -y python3.8 python3-pip
-
-            # Create symlink
-            alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-
-            # Ensure SSH is enabled
-            systemctl enable sshd
-            systemctl start sshd
-EOF
+            EOF
 
   tags = {
     Name = "u21.local"
@@ -137,9 +125,9 @@ resource "local_file" "ansible_inventory" {
 
   content = <<-EOT
     [frontend]
-    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem
+    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem ansible_python_interpreter=/usr/bin/python3
 
     [backend]
-    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem
+    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/root/.jenkins/jenkins.pem ansible_python_interpreter=/usr/bin/python3
   EOT
 }
