@@ -89,17 +89,6 @@ resource "aws_instance" "amazon_linux_vm" {
    user_data = <<-EOF
               #!/bin/bash
               hostnamectl set-hostname c8.local
-
-              # Install Python 3.8 for Ansible compatibility
-              amazon-linux-extras enable python3.8 -y
-              yum clean metadata
-              yum install -y python3.8
-
-              # Create symlink for python3 if not present
-              alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
-
-              # Install pip if needed (optional)
-              yum install -y python3-pip
               EOF
 
 
